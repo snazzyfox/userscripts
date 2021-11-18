@@ -35,9 +35,7 @@
     const BUTTON = 'Alt'
 
     const style = GM_addStyle(HIDE_BUTTONS);
-    document.addEventListener('load', () => {
-        style.innerHTML = HIDE_BUTTONS
-    })
+    
     document.addEventListener('keydown', (event) => {
         if (event.key === BUTTON) {
             style.innerHTML = OVERLAY
