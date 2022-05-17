@@ -26,7 +26,8 @@
     const GAMBA_CANCEL_BUTTON_CLASS = "Layout-sc-nxg1ff-0 bXhxYI";
 
     const channelName = window.location.pathname.substr(1);
-    let users = [];
+    let seenUsers = new Set(); 
+    let pickableUsers = [];
 
     function observerCallback(mutations) {
       mutations.forEach((mutation) => {
@@ -53,7 +54,8 @@
 
     function gambaWindowClosed() {
         ComfyJS.Disconnect();
-        users = [];
+        pickableUsers = [];
+        seenUsers = new Set();
     }
 
     function pickGambaUser() {
@@ -67,7 +69,7 @@
         const inputId = "prediction-outcome-" + i.toString();
         const inputNode = document.getElementById(inputId);
         if (inputNode && !inputNode.value) {
-          const username = users.splice(Math.floor(Math.random() * users.length), 1);
+          const username = pickableUsers.splice(Math.floor(Math.random() * pickableUsers.length), 1);
           if (username[0]) {
             setInputValue(inputNode, username[0]);
           }
@@ -95,7 +97,10 @@
 
     ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
       if (command === "play") {
-        users.push(user);
+        if (!seenUsers.has(user)) {
+          pickableUsers.push(user);
+          seenUsers.add(user);
+        }
       }
     }
 
