@@ -1,13 +1,19 @@
 // ==UserScript==
 // @name         Marbles Gamba
 // @version      0.1
-// @description  Auto fill gambas in marbles games. Starts listening for !play messages when prediction window is open.
+// @description  Provides a button to auto fill usernames as options for marbles games.
 // @author       SnazzyTheFox
 // @match        https://www.twitch.tv/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=twitch.tv
 // @grant        none
 // @require      https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js
 // ==/UserScript==
+
+/*
+Adds a "Add Marbles user" button to the twitch prediction screen for mods. Once the button is visible, it records all users who typed
+"!play" in the chat. Clicking on the button picks a user randomly from the list. The tool will not pick the same user twice, but everything 
+is forgotten once the prediction modal exits.
+*/
 
 (function() {
     'use strict';
